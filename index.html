@@ -147,8 +147,8 @@
                     <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Videos Publicados</p>
                 </div>
                 <div class="p-4 rounded-xl bg-cardBg/50 border border-borderDark/40">
-                    <p class="font-heading font-black text-2xl md:text-3xl text-ufcGold">1080p</p>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Calidad HD</p>
+                    <p class="font-heading font-black text-2xl md:text-3xl text-ufcGold">HD</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Alta Calidad</p>
                 </div>
                 <div class="p-4 rounded-xl bg-cardBg/50 border border-borderDark/40">
                     <p class="font-heading font-black text-2xl md:text-3xl text-white">100%</p>
@@ -169,7 +169,7 @@
                 Mi Videoteca <span class="text-gradient-red">Destacada</span>
             </h2>
             <p class="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-                Estos son los 4 edites principales de mi catálogo personal conectados desde Google Drive.
+                Estos son los 4 edites principales de mi catálogo personal.
             </p>
         </div>
 
@@ -185,7 +185,7 @@
                     ¿Quieres explorar más?
                 </h3>
                 <p class="text-gray-400 text-sm sm:text-base">
-                    Tengo más de 42 vídeos publicados con la mejor calidad 1080p y sincro musical. ¡Sígueme en TikTok para no perderte ningún estreno!
+                    Tengo más de 42 vídeos publicados con la mejor calidad y sincro musical. ¡Sígueme en TikTok para no perderte ningún estreno!
                 </p>
                 <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-ufcRed hover:bg-ufcRedHover text-white font-heading font-black text-base uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105">
                     <i class="fa-brands fa-tiktok text-xl"></i>
@@ -248,7 +248,7 @@
                 <div class="pt-4 flex flex-wrap gap-4">
                     <div class="flex items-center gap-3 bg-darkBg border border-borderDark px-5 py-3 rounded-xl">
                         <i class="fa-solid fa-clapperboard text-ufcRed text-xl"></i>
-                        <span class="text-xs font-semibold text-gray-200">Sync Musical 1080p</span>
+                        <span class="text-xs font-semibold text-gray-200">Sync Musical HD</span>
                     </div>
                     <div class="flex items-center gap-3 bg-darkBg border border-borderDark px-5 py-3 rounded-xl">
                         <i class="fa-solid fa-bolt text-ufcGold text-xl"></i>
@@ -324,7 +324,7 @@
         </div>
     </footer>
 
-    <!-- VIDEO PLAYER MODAL OPTIMIZED FOR VERTICAL MOBILE & PC -->
+    <!-- VIDEO PLAYER MODAL CLEAN & VERTICAL -->
     <div id="video-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden flex items-center justify-center p-2 sm:p-4">
         <div class="relative w-full max-w-md bg-cardBg border border-borderDark rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
             <!-- Modal Header -->
@@ -338,53 +338,55 @@
                 </button>
             </div>
 
-            <!-- Vertical Video Container (9:16 Aspect Ratio for Mobile & PC matching TikTok style) -->
+            <!-- Clean Vertical Video Container (Sin controles molestos de Drive) -->
             <div class="relative w-full bg-black flex-1 flex items-center justify-center overflow-hidden aspect-[9/16]">
-                <iframe id="modal-iframe" class="w-full h-full border-0 object-cover" allowfullscreen allow="autoplay"></iframe>
+                <iframe id="modal-iframe" class="w-full h-full border-0 object-cover pointer-events-auto" allowfullscreen allow="autoplay"></iframe>
+                <!-- Overlay transparente para evitar clics en la barra de Drive -->
+                <div class="absolute inset-x-0 bottom-0 h-14 bg-transparent pointer-events-auto"></div>
             </div>
 
             <!-- Modal Footer -->
             <div class="px-4 py-3 bg-darkBg border-t border-borderDark flex items-center justify-between text-[11px] text-gray-400">
-                <span class="text-ufcRed font-semibold">1080p HD (Vertical Mode)</span>
+                <span class="text-ufcRed font-semibold">Reproductor Organico</span>
                 <span>ReprodByStrexx © 2026</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Catálogo optimizado con tus videos de Google Drive
+        // Tus 4 videos de Google Drive convertidos automáticamente a modo vista limpia
         const videoCatalog = [
             {
                 id: 1,
                 title: "Primer Video Destacado",
                 categoryLabel: "Destacado Principal",
-                duration: "1080p HD",
+                duration: "HD",
                 poster: "https://placehold.co/600x800/141414/e60000?text=Primer+Edit",
-                driveUrl: "https://drive.google.com/file/d/1vuHQ2vZENa8QWqAXZFLq8cybEAJSd9hR/preview"
+                driveUrl: "https://drive.google.com/file/d/1vuHQ2vZENa8QWqAXZFLq8cybEAJSd9hR/preview?rm=minimal"
             },
             {
                 id: 2,
                 title: "Segundo Video del Catálogo",
                 categoryLabel: "Segundo Edit",
-                duration: "1080p HD",
+                duration: "HD",
                 poster: "https://placehold.co/600x800/141414/d4af37?text=Segundo+Edit",
-                driveUrl: "https://drive.google.com/file/d/1lTK6h_L3-okQAaanIuAX9-yK2Wiibwna/preview"
+                driveUrl: "https://drive.google.com/file/d/1lTK6h_L3-okQAaanIuAX9-yK2Wiibwna/preview?rm=minimal"
             },
             {
                 id: 3,
                 title: "Tercer Video del Catálogo",
                 categoryLabel: "Tercer Edit",
-                duration: "1080p HD",
+                duration: "HD",
                 poster: "https://placehold.co/600x800/141414/e60000?text=Tercer+Edit",
-                driveUrl: "https://drive.google.com/file/d/1iq1AYXpIMdljnsjnknlILFxJbA4AV_AT/preview"
+                driveUrl: "https://drive.google.com/file/d/1iq1AYXpIMdljnsjnknlILFxJbA4AV_AT/preview?rm=minimal"
             },
             {
                 id: 4,
                 title: "Último Lanzamiento (Más Reciente)",
                 categoryLabel: "Más Reciente",
-                duration: "1080p HD",
+                duration: "HD",
                 poster: "https://placehold.co/600x800/141414/ffffff?text=Edit+Reciente",
-                driveUrl: "https://drive.google.com/file/d/16eO4HQO2Wz48b8hvLPkB1AxueRnQrdqf/preview"
+                driveUrl: "https://drive.google.com/file/d/16eO4HQO2Wz48b8hvLPkB1AxueRnQrdqf/preview?rm=minimal"
             }
         ];
 
@@ -452,7 +454,7 @@
         };
 
         mobileMenuBtn.onclick = () => mobileMenu.classList.toggle('hidden');
-        mobileLinks.files?.forEach?.(link => link.onclick = () => mobileMenu.classList.add('hidden'));
+        mobileLinks.forEach(link => link.onclick = () => mobileMenu.classList.add('hidden'));
 
         // Formulario
         const form = document.getElementById('suggestion-form');
@@ -467,7 +469,7 @@
             const mailtoUrl = `mailto:reprodbystrexx@gmail.com?subject=Nueva Sugerencia de Edit (${encodeURIComponent(name)})&body=Nombre: ${encodeURIComponent(name)}%0APropuesta: ${encodeURIComponent(proposal)}%0AMensaje: ${encodeURIComponent(message)}`;
 
             window.location.href = mailtoUrl;
-            formSuccess.classList.remove('hidden');
+            formSuccess.classList.add('hidden');
             form.reset();
         };
 
