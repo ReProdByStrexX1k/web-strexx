@@ -338,23 +338,20 @@
                 </button>
             </div>
 
-            <!-- Clean Vertical Video Container (Sin controles molestos de Drive) -->
+            <!-- Clean Vertical Video Element (Sin controles nativos ni de Google Drive) -->
             <div class="relative w-full bg-black flex-1 flex items-center justify-center overflow-hidden aspect-[9/16]">
-                <iframe id="modal-iframe" class="w-full h-full border-0 object-cover pointer-events-auto" allowfullscreen allow="autoplay"></iframe>
-                <!-- Overlay transparente para evitar clics en la barra de Drive -->
-                <div class="absolute inset-x-0 bottom-0 h-14 bg-transparent pointer-events-auto"></div>
+                <video id="modal-video" class="w-full h-full object-cover cursor-pointer" controlslist="nodownload nofullscreen noremoteplayback" disablepicturein-picture playsinline autoplay loop></video>
             </div>
 
-            <!-- Modal Footer -->
-            <div class="px-4 py-3 bg-darkBg border-t border-borderDark flex items-center justify-between text-[11px] text-gray-400">
-                <span class="text-ufcRed font-semibold">Reproductor Organico</span>
+            <!-- Modal Footer Clean -->
+            <div class="px-4 py-3 bg-darkBg border-t border-borderDark flex items-center justify-center text-[11px] text-gray-500">
                 <span>ReprodByStrexx © 2026</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Tus 4 videos de Google Drive convertidos automáticamente a modo vista limpia
+        // Enlaces directos optimizados para reproducción fluida sin controles molestos
         const videoCatalog = [
             {
                 id: 1,
@@ -362,7 +359,7 @@
                 categoryLabel: "Destacado Principal",
                 duration: "HD",
                 poster: "https://placehold.co/600x800/141414/e60000?text=Primer+Edit",
-                driveUrl: "https://drive.google.com/file/d/1vuHQ2vZENa8QWqAXZFLq8cybEAJSd9hR/preview?rm=minimal"
+                videoUrl: "https://docs.google.com/uc?export=download&id=1vuHQ2vZENa8QWqAXZFLq8cybEAJSd9hR"
             },
             {
                 id: 2,
@@ -370,7 +367,7 @@
                 categoryLabel: "Segundo Edit",
                 duration: "HD",
                 poster: "https://placehold.co/600x800/141414/d4af37?text=Segundo+Edit",
-                driveUrl: "https://drive.google.com/file/d/1lTK6h_L3-okQAaanIuAX9-yK2Wiibwna/preview?rm=minimal"
+                videoUrl: "https://docs.google.com/uc?export=download&id=1lTK6h_L3-okQAaanIuAX9-yK2Wiibwna"
             },
             {
                 id: 3,
@@ -378,7 +375,7 @@
                 categoryLabel: "Tercer Edit",
                 duration: "HD",
                 poster: "https://placehold.co/600x800/141414/e60000?text=Tercer+Edit",
-                driveUrl: "https://drive.google.com/file/d/1iq1AYXpIMdljnsjnknlILFxJbA4AV_AT/preview?rm=minimal"
+                videoUrl: "https://docs.google.com/uc?export=download&id=1iq1AYXpIMdljnsjnknlILFxJbA4AV_AT"
             },
             {
                 id: 4,
@@ -386,7 +383,7 @@
                 categoryLabel: "Más Reciente",
                 duration: "HD",
                 poster: "https://placehold.co/600x800/141414/ffffff?text=Edit+Reciente",
-                driveUrl: "https://drive.google.com/file/d/16eO4HQO2Wz48b8hvLPkB1AxueRnQrdqf/preview?rm=minimal"
+                videoUrl: "https://docs.google.com/uc?export=download&id=16eO4HQO2Wz48b8hvLPkB1AxueRnQrdqf"
             }
         ];
 
@@ -399,7 +396,7 @@
         const modalCloseBtn = document.getElementById('modal-close-btn');
         const modalTitle = document.getElementById('modal-title');
         const modalCategory = document.getElementById('modal-category');
-        const modalIframe = document.getElementById('modal-iframe');
+        const modalVideo = document.getElementById('modal-video');
 
         function renderVideos() {
             videoGrid.innerHTML = '';
@@ -437,20 +434,31 @@
         function openModal(video) {
             modalTitle.innerText = video.title;
             modalCategory.innerText = video.categoryLabel;
-            modalIframe.src = video.driveUrl;
+            modalVideo.src = video.videoUrl;
+            modalVideo.play();
             videoModal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             videoModal.classList.add('hidden');
-            modalIframe.src = "";
+            modalVideo.pause();
+            modalVideo.src = "";
             document.body.style.overflow = 'auto';
         }
 
         modalCloseBtn.onclick = closeModal;
         videoModal.onclick = (e) => {
             if (e.target === videoModal) closeModal();
+        };
+
+        // Pausar o reproducir al tocar el video directamente
+        modalVideo.onclick = () => {
+            if (modalVideo.paused) {
+                modalVideo.play();
+            } else {
+                modalVideo.pause();
+            }
         };
 
         mobileMenuBtn.onclick = () => mobileMenu.classList.toggle('hidden');
@@ -469,7 +477,7 @@
             const mailtoUrl = `mailto:reprodbystrexx@gmail.com?subject=Nueva Sugerencia de Edit (${encodeURIComponent(name)})&body=Nombre: ${encodeURIComponent(name)}%0APropuesta: ${encodeURIComponent(proposal)}%0AMensaje: ${encodeURIComponent(message)}`;
 
             window.location.href = mailtoUrl;
-            formSuccess.classList.add('hidden');
+            formSuccess.classList.remove('hidden');
             form.reset();
         };
 
