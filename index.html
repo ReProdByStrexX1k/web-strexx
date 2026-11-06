@@ -211,7 +211,7 @@
             <p class="text-gray-400 text-sm sm:text-base mb-6 max-w-xl mx-auto">
                 Tengo más de 42 videos publicados con la mejor calidad 1080p y sincro musical. ¡Sígueme en TikTok para no perderte ningún estreno!
             </p>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-ufcRed hover:bg-ufcRedHover text-white font-heading font-black uppercase text-sm tracking-wider px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 glow-red">
+            <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-ufcRed hover:bg-ufcRedHover text-white font-heading font-black uppercase text-sm tracking-wider px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 glow-red">
                 <i class="fa-brands fa-tiktok text-xl"></i>
                 <span>Ver los 42 videos completos en mi TikTok</span>
                 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
@@ -302,15 +302,9 @@
 
             <!-- Form connected to Mailto fallback & JS handling -->
             <form id="suggestion-form" class="space-y-6 relative z-10">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Tu Nombre / Nickname *</label>
-                        <input type="text" id="form-name" required placeholder="Ej. Carlos / Fan de Kick" class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Cuenta de Redes (Opcional)</label>
-                        <input type="text" id="form-social" placeholder="@tu_tiktok_o_ig" class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors">
-                    </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Tu Nombre / Nickname *</label>
+                    <input type="text" id="form-name" required placeholder="Ej. Carlos / Fan de Kick" class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors">
                 </div>
 
                 <div>
@@ -356,7 +350,7 @@
 
             <!-- Social Links -->
             <div class="flex items-center space-x-6">
-                <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg" title="TikTok Oficial">
+                <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg" title="TikTok Oficial">
                     <i class="fa-brands fa-tiktok"></i>
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg" title="Instagram">
@@ -579,7 +573,6 @@
             e.preventDefault();
             
             const name = document.getElementById('form-name').value;
-            const social = document.getElementById('form-social').value || 'No especificada';
             const proposal = document.getElementById('form-proposal').value;
             const message = document.getElementById('form-message').value || 'Sin mensaje adicional';
 
@@ -588,7 +581,6 @@
                 `Propuesta de Edit para ReprodByStrexx\n` +
                 `-----------------------------------------\n` +
                 `Nombre / Nick: ${name}\n` +
-                `Red Social: ${social}\n` +
                 `Propuesta: ${proposal}\n\n` +
                 `Detalles / Mensaje:\n${message}`
             );
