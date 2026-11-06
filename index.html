@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReprodByStrexx | Galería Digital de Edits & Streaming Cinema</title>
+    <title>ReprodByStrexx | Galería Digital de Edits & Montajes</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -77,10 +76,9 @@
 </head>
 <body class="custom-scrollbar selection:bg-ufcRed selection:text-white">
 
-    <!-- 1. NAVEGACIÓN (Navbar) -->
+    <!-- 1. NAVEGACIÓN -->
     <nav class="fixed top-0 left-0 w-full z-40 bg-darkBg/90 backdrop-blur-md border-b border-borderDark transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Logo -->
             <a href="#" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 bg-ufcRed flex items-center justify-center font-heading font-black text-white text-xl octagon-border group-hover:scale-105 transition-transform">
                     S
@@ -90,26 +88,22 @@
                 </span>
             </a>
 
-            <!-- Desktop Links -->
             <div class="hidden md:flex items-center space-x-8 font-medium text-sm tracking-wide">
                 <a href="#coleccion" class="hover:text-ufcRed transition-colors">La Colección Completa</a>
                 <a href="#filosofia" class="hover:text-ufcRed transition-colors">Mi Filosofía</a>
                 <a href="#comunidad" class="hover:text-ufcRed transition-colors">Buzón de Ideas</a>
             </div>
 
-            <!-- CTA Badge -->
             <div class="hidden sm:flex items-center gap-2 bg-cardBg border border-borderDark px-4 py-1.5 rounded-full text-xs font-semibold">
                 <span class="w-2 h-2 rounded-full bg-ufcRed animate-pulse"></span>
                 <span>GALERÍA OFICIAL 2026</span>
             </div>
 
-            <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-btn" class="md:hidden text-white hover:text-ufcRed focus:outline-none text-2xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
 
-        <!-- Mobile Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden bg-cardBg border-b border-borderDark px-6 py-6 space-y-4">
             <a href="#coleccion" class="mobile-link block text-lg font-medium hover:text-ufcRed">La Colección Completa</a>
             <a href="#filosofia" class="mobile-link block text-lg font-medium hover:text-ufcRed">Mi Filosofía</a>
@@ -117,53 +111,48 @@
         </div>
     </nav>
 
-    <!-- 2. SECCIÓN HERO (Presentación) -->
+    <!-- 2. SECCIÓN HERO -->
     <section class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 overflow-hidden">
-        <!-- Hero Background Grid Overlay -->
         <div class="absolute inset-0 bg-[radial-gradient(#1f1f1f_1px,transparent_1px)] [background-size:24px_24px] opacity-30"></div>
         <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-ufcRed/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="max-w-5xl mx-auto text-center relative z-10 space-y-8">
-            <!-- Badge -->
             <div class="inline-flex items-center gap-2 bg-ufcRed/10 border border-ufcRed/40 text-ufcRed text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest glow-red">
-                <i class="fa-solid fa-bolt"></i> Archivo Digital: Streamers, MMA & Cultura Viral
+                <i class="fa-solid fa-fire"></i> Archivo Digital | Edits & Montajes
             </div>
 
-            <!-- Main Title -->
             <h1 class="font-heading font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-none">
-                Cultura Digital <br>
-                en <span class="text-gradient-red">Máximo</span> <span class="text-gradient-gold">Ritmo</span>
+                El Arte del <br>
+                <span class="text-gradient-red">Octágono</span> en <span class="text-gradient-gold">Movimiento</span>
             </h1>
 
-            <!-- Subtitle -->
             <p class="max-w-3xl mx-auto text-gray-400 text-base sm:text-lg md:text-xl font-light leading-relaxed">
-                No es solo edición, es un catálogo audiovisual dedicado a capturar la esencia, historia y vibra de los mejores creadores de contenido, momentos épicos de Kick, montajes de motivación y la adrenalina de los deportes de contacto.
+                Una biblioteca visual dedicada a capturar los mejores momentos de streamers, el deporte y la adrenalina. Explora mis producciones destacadas y revisa mi colección completa en TikTok.
             </p>
 
-            <!-- Action Button -->
             <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a href="#coleccion" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-ufcRed hover:bg-ufcRedHover text-white font-heading font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 glow-red">
-                    <span>Ver TikTok Vault (42 Edits)</span>
+                    <span>Explorar Galería</span>
                     <i class="fa-solid fa-arrow-down"></i>
                 </a>
-                <a href="#filosofia" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-cardBg border border-borderDark hover:border-ufcGold text-gray-300 hover:text-white font-heading font-semibold uppercase text-sm tracking-wider px-6 py-4 rounded-xl transition-all">
-                    <span>Conocer al Creador</span>
+                <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-cardBg border border-borderDark hover:border-ufcGold text-gray-300 hover:text-white font-heading font-semibold uppercase text-sm tracking-wider px-6 py-4 rounded-xl transition-all">
+                    <i class="fa-brands fa-tiktok text-ufcGold"></i>
+                    <span>Ver TikTok (42 Videos)</span>
                 </a>
             </div>
 
-            <!-- Stats Bar -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 border-t border-borderDark/60 max-w-4xl mx-auto">
                 <div class="p-4 rounded-xl bg-cardBg/50 border border-borderDark/40">
                     <p class="font-heading font-black text-2xl md:text-3xl text-ufcRed">42</p>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Videos en TikTok</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Videos Publicados</p>
                 </div>
                 <div class="p-4 rounded-xl bg-cardBg/50 border border-borderDark/40">
-                    <p class="font-heading font-black text-2xl md:text-3xl text-ufcGold">1080p HD</p>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Máxima Calidad TikTok</p>
+                    <p class="font-heading font-black text-2xl md:text-3xl text-ufcGold">1080p</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Calidad HD</p>
                 </div>
                 <div class="p-4 rounded-xl bg-cardBg/50 border border-borderDark/40">
                     <p class="font-heading font-black text-2xl md:text-3xl text-white">100%</p>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Pasión Orgánica</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-medium mt-1">Orgánico</p>
                 </div>
                 <div class="p-4 rounded-xl bg-cardBg/50 border border-borderDark/40">
                     <p class="font-heading font-black text-2xl md:text-3xl text-ufcRed">24/7</p>
@@ -173,74 +162,60 @@
         </div>
     </section>
 
-    <!-- 3. SECCIÓN "LA COLECCIÓN COMPLETA" (Videoteca Audiovisual) -->
+    <!-- 3. SECCIÓN LA COLECCIÓN COMPLETA -->
     <section id="coleccion" class="py-20 px-4 max-w-7xl mx-auto relative">
         <div class="text-center space-y-4 mb-12">
             <h2 class="font-heading font-black text-3xl sm:text-5xl uppercase tracking-tight">
-                Edits <span class="text-gradient-red">Destacados</span>
+                Mi Videoteca <span class="text-gradient-red">Destacada</span>
             </h2>
             <p class="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-                Una selección especial de mis piezas favoritas. Para ver el catálogo completo de 42 videos, visita mi perfil oficial en TikTok.
+                Estos son los 4 edites principales de mi catálogo personal conectados desde Google Drive.
             </p>
         </div>
 
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12" id="filter-tabs">
-            <button data-filter="all" class="tab-btn active bg-ufcRed text-white px-6 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300">
-                Todos (Top 4)
-            </button>
-            <button data-filter="streamers" class="tab-btn bg-cardBg border border-borderDark hover:border-ufcRed text-gray-300 hover:text-white px-6 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300">
-                Streamers & Creadores
-            </button>
-            <button data-filter="recientes" class="tab-btn bg-cardBg border border-borderDark hover:border-ufcRed text-gray-300 hover:text-white px-6 py-2.5 rounded-xl font-heading font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300">
-                Lo Más Reciente
-            </button>
+        <!-- Video Grid (4 Videos) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" id="video-grid">
+            <!-- Renderizado dinámico vía JS -->
         </div>
 
-        <!-- Video Grid (Only 4 Featured Videos) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="video-grid">
-            <!-- Video Cards injected via JavaScript dynamically -->
-        </div>
-
-        <!-- TikTok CTA Banner -->
-        <div class="mt-12 text-center p-8 bg-cardBg border border-borderDark hover:border-ufcRed/60 rounded-3xl relative overflow-hidden transition-all duration-300">
-            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-ufcRed/10 rounded-full blur-2xl pointer-events-none"></div>
-            <h3 class="font-heading font-black text-2xl sm:text-3xl uppercase text-white mb-3">
-                ¿Quieres explorar más?
-            </h3>
-            <p class="text-gray-400 text-sm sm:text-base mb-6 max-w-xl mx-auto">
-                Tengo más de 42 videos publicados con la mejor calidad 1080p y sincro musical. ¡Sígueme en TikTok para no perderte ningún estreno!
-            </p>
-            <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-ufcRed hover:bg-ufcRedHover text-white font-heading font-black uppercase text-sm tracking-wider px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 glow-red">
-                <i class="fa-brands fa-tiktok text-xl"></i>
-                <span>Ver los 42 videos completos en mi TikTok</span>
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
+        <!-- Banner CTA a TikTok -->
+        <div class="bg-gradient-to-r from-cardBg via-darkBg to-cardBg border border-ufcRed/40 rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden glow-red">
+            <div class="relative z-10 max-w-2xl mx-auto space-y-6">
+                <h3 class="font-heading font-black text-2xl sm:text-4xl uppercase text-white">
+                    ¿Quieres explorar más?
+                </h3>
+                <p class="text-gray-400 text-sm sm:text-base">
+                    Tengo más de 42 vídeos publicados con la mejor calidad 1080p y sincro musical. ¡Sígueme en TikTok para no perderte ningún estreno!
+                </p>
+                <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-ufcRed hover:bg-ufcRedHover text-white font-heading font-black text-base uppercase tracking-wider px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105">
+                    <i class="fa-brands fa-tiktok text-xl"></i>
+                    <span>Ver los 42 videos completos en mi TikTok</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+            </div>
         </div>
     </section>
 
-    <!-- 4. SECCIÓN SOBRE MÍ / FILOSOFÍA DE CREADOR -->
+    <!-- 4. SECCIÓN SOBRE MÍ -->
     <section id="filosofia" class="py-20 px-4 bg-cardBg/40 border-y border-borderDark relative overflow-hidden">
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <!-- Visual Graphic / Badge Frame -->
             <div class="lg:col-span-5 relative flex justify-center">
                 <div class="relative w-72 h-80 sm:w-80 sm:h-96 bg-cardBg border-2 border-ufcGold/40 rounded-2xl p-6 flex flex-col justify-between overflow-hidden shadow-2xl glow-gold">
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-ufcGold/10 rounded-full blur-2xl"></div>
                     <div>
                         <div class="w-12 h-12 bg-ufcGold text-black font-heading font-black text-2xl flex items-center justify-center rounded-xl mb-6">
                             SX
                         </div>
                         <h3 class="font-heading font-black text-2xl text-white uppercase tracking-wider">
-                            Strexx
+                            StrexX
                         </h3>
-                        <p class="text-xs text-ufcGold font-semibold uppercase tracking-widest mt-1">Editor & Creator Visual</p>
+                        <p class="text-xs text-ufcGold font-semibold uppercase tracking-widest mt-1">Video Editor & Creator</p>
                     </div>
 
                     <div class="space-y-3 border-t border-borderDark pt-4">
                         <div class="flex items-center justify-between text-xs">
                             <span class="text-gray-400">Enfoque:</span>
-                            <span class="text-white font-semibold">Streamers, MMA & Beats</span>
+                            <span class="text-white font-semibold">Streamers, MMA & Edits</span>
                         </div>
                         <div class="flex items-center justify-between text-xs">
                             <span class="text-gray-400">Plataforma:</span>
@@ -254,7 +229,6 @@
                 </div>
             </div>
 
-            <!-- Content -->
             <div class="lg:col-span-7 space-y-6 text-left">
                 <div class="inline-flex items-center gap-2 text-ufcGold text-xs font-bold uppercase tracking-widest">
                     <i class="fa-solid fa-gem"></i> La Esencia del Proyecto
@@ -273,12 +247,12 @@
 
                 <div class="pt-4 flex flex-wrap gap-4">
                     <div class="flex items-center gap-3 bg-darkBg border border-borderDark px-5 py-3 rounded-xl">
-                        <i class="fa-solid fa-sliders text-ufcRed text-xl"></i>
+                        <i class="fa-solid fa-clapperboard text-ufcRed text-xl"></i>
                         <span class="text-xs font-semibold text-gray-200">Sync Musical 1080p</span>
                     </div>
                     <div class="flex items-center gap-3 bg-darkBg border border-borderDark px-5 py-3 rounded-xl">
-                        <i class="fa-solid fa-fire text-ufcGold text-xl"></i>
-                        <span class="text-xs font-semibold text-gray-200">Cultura Streamer & MMA</span>
+                        <i class="fa-solid fa-bolt text-ufcGold text-xl"></i>
+                        <span class="text-xs font-semibold text-gray-200">Edición Dinámica</span>
                     </div>
                 </div>
             </div>
@@ -286,57 +260,51 @@
         </div>
     </section>
 
-    <!-- 5. SECCIÓN COMUNIDAD / SUGERENCIA DE EDITS -->
+    <!-- 5. SECCIÓN BUZÓN DE IDEAS -->
     <section id="comunidad" class="py-20 px-4 max-w-4xl mx-auto">
         <div class="bg-cardBg border border-borderDark rounded-3xl p-6 sm:p-10 relative overflow-hidden">
-            <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-ufcRed/10 rounded-full blur-3xl pointer-events-none"></div>
-            
             <div class="text-center space-y-3 mb-10">
                 <h2 class="font-heading font-black text-3xl sm:text-4xl uppercase tracking-tight">
                     ¿Cuál debería ser <span class="text-gradient-red">el siguiente?</span>
                 </h2>
                 <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto">
-                    Propón un streamer, una canción virada en TikTok, un peleador o una idea cinemática. 
+                    Déjame saber qué streamer, peleador o canción debería protagonizar mi próxima pieza visual.
                 </p>
             </div>
 
-            <!-- Form connected to Mailto fallback & JS handling -->
             <form id="suggestion-form" class="space-y-6 relative z-10">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Tu Nombre / Nickname *</label>
-                    <input type="text" id="form-name" required placeholder="Ej. Carlos / Fan de Kick" class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors">
+                    <input type="text" id="user-name" required placeholder="Ej. Carlos" class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors">
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Propuesta de Streamer / Peleador / Canción *</label>
-                    <input type="text" id="form-proposal" required placeholder="Ej: Togi, Marpe, Maestro Shifu o tema musical..." class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors">
+                    <input type="text" id="user-proposal" required placeholder="Ej. Edit de Topuria con Phonk" class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors">
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Mensaje o Detalle del Edit</label>
-                    <textarea id="form-message" rows="4" placeholder="Describe la vibra, la escena o los cortes que imaginas..." class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors"></textarea>
+                    <textarea id="user-message" rows="4" placeholder="Describe la vibra o los momentos clave que te gustaría ver..." class="w-full bg-darkBg border border-borderDark focus:border-ufcRed rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none transition-colors"></textarea>
                 </div>
 
                 <button type="submit" class="w-full bg-ufcRed hover:bg-ufcRedHover text-white font-heading font-black uppercase tracking-wider py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 glow-red">
                     <i class="fa-solid fa-paper-plane"></i>
                     <span>Enviar Propuesta a Strexx</span>
                 </button>
-
-                <!-- Explanatory Tooltip / Information Note -->
-                <div class="mt-4 p-3 bg-darkBg/80 border border-borderDark rounded-xl flex items-center gap-3 text-xs text-gray-400">
-                    <i class="fa-solid fa-envelope text-ufcGold text-base shrink-0"></i>
-                    <span><strong>¿A dónde llega tu mensaje?</strong> Tus propuestas se envían directamente a la bandeja privada de Strexx (<strong class="text-white">reprodbystrexx@gmail.com</strong>).</span>
-                </div>
             </form>
 
-            <!-- Success Alert Box (Hidden by default) -->
+            <div class="mt-4 p-4 rounded-xl bg-darkBg/60 border border-borderDark text-center text-xs text-gray-400">
+                <p><i class="fa-solid fa-envelope text-ufcGold mr-1.5"></i> Tus propuestas se envían directamente a la bandeja privada de Strexx (<strong>reprodbystrexx@gmail.com</strong>).</p>
+            </div>
+
             <div id="form-success" class="hidden mt-6 bg-emerald-950/80 border border-emerald-500/50 rounded-xl p-4 text-center text-emerald-300 font-medium text-sm">
-                <i class="fa-solid fa-circle-check text-emerald-400 text-lg mr-2"></i> ¡Propuesta preparada con éxito! Se abrirá tu aplicación de correo para enviar a reprodbystrexx@gmail.com.
+                <i class="fa-solid fa-circle-check text-emerald-400 text-lg mr-2"></i> ¡Propuesta preparada! Se ha abierto tu cliente de correo para enviarla a reprodbystrexx@gmail.com.
             </div>
         </div>
     </section>
 
-    <!-- 6. PIE DE PÁGINA (Footer) -->
+    <!-- 6. PIE DE PÁGINA -->
     <footer class="bg-darkBg border-t border-borderDark py-12 px-4">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
             <div>
@@ -344,26 +312,21 @@
                     REPROD<span class="text-ufcRed">BY</span>STREXX
                 </p>
                 <p class="text-xs text-gray-500 mt-1">
-                    Galería independiente para los apasionados de los edits de calidad en TikTok. © 2026 ReprodByStrexx.
+                    Una galería independiente para los verdaderos apasionados. © 2026 ReprodByStrexx.
                 </p>
             </div>
 
-            <!-- Social Links -->
             <div class="flex items-center space-x-6">
-                <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg" title="TikTok Oficial">
+                <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg">
                     <i class="fa-brands fa-tiktok"></i>
-                </a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg" title="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
                 </a>
             </div>
         </div>
     </footer>
 
-    <!-- VIDEO PLAYER MODAL -->
+    <!-- VIDEO PLAYER MODAL WITH GOOGLE DRIVE IFRAME -->
     <div id="video-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden flex items-center justify-center p-4">
         <div class="relative w-full max-w-4xl bg-cardBg border border-borderDark rounded-2xl overflow-hidden shadow-2xl">
-            <!-- Modal Header -->
             <div class="flex items-center justify-between px-6 py-4 border-b border-borderDark bg-darkBg">
                 <div>
                     <h4 id="modal-title" class="font-heading font-bold text-white text-base sm:text-lg">Título del Edit</h4>
@@ -374,181 +337,110 @@
                 </button>
             </div>
 
-            <!-- Video Player Area -->
+            <!-- Google Drive Video Iframe Container -->
             <div class="relative aspect-video w-full bg-black flex items-center justify-center overflow-hidden">
-                <video id="modal-video-element" class="w-full h-full object-cover" controls autoplay loop>
-                    <source id="modal-video-source" src="" type="video/mp4">
-                    Tu navegador no soporta el reproductor de video.
-                </video>
+                <iframe id="modal-iframe" class="w-full h-full border-0" allowfullscreen allow="autoplay"></iframe>
             </div>
 
-            <!-- Modal Footer Stats -->
-            <div class="px-6 py-4 bg-darkBg border-t border-borderDark flex flex-wrap items-center justify-between gap-4 text-xs text-gray-400">
-                <div class="flex items-center gap-6">
-                    <span><i class="fa-solid fa-eye text-ufcRed mr-1.5"></i> <span id="modal-views">0</span> vistas</span>
-                    <span><i class="fa-solid fa-heart text-ufcRed mr-1.5"></i> <span id="modal-likes">0</span> me gusta</span>
-                </div>
-                <span class="text-gray-500">ReprodByStrexx Edit Vault © 2026</span>
+            <div class="px-6 py-4 bg-darkBg border-t border-borderDark flex items-center justify-between text-xs text-gray-400">
+                <span class="text-ufcRed font-semibold">1080p HD Quality (Google Drive)</span>
+                <span>ReprodByStrexx Edit Vault © 2026</span>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Updated Video Catalog: EXACTLY 4 Featured Videos
+        // Tus 4 videos exactos de Google Drive en el orden solicitado
         const videoCatalog = [
             {
                 id: 1,
-                title: "Togi: Pura Disciplina y Fuerza",
-                category: "streamers",
-                categoryLabel: "Streamers & Creadores",
-                views: "145.2K",
-                likes: "22.4K",
-                duration: "0:45",
-                poster: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+                title: "Primer Video Destacado",
+                categoryLabel: "Destacado Principal",
+                duration: "1080p HD",
+                poster: "https://placehold.co/600x800/141414/e60000?text=Primer+Edit",
+                driveUrl: "https://drive.google.com/file/d/1vuHQ2vZENa8QWqAXZFLq8cybEAJSd9hR/preview"
             },
             {
                 id: 2,
-                title: "Marpe: Highlights & Vibra",
-                category: "streamers",
-                categoryLabel: "Streamers & Creadores",
-                views: "198.6K",
-                likes: "31.0K",
-                duration: "0:50",
-                poster: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+                title: "Segundo Video del Catálogo",
+                categoryLabel: "Segundo Edit",
+                duration: "1080p HD",
+                poster: "https://placehold.co/600x800/141414/d4af37?text=Segundo+Edit",
+                driveUrl: "https://drive.google.com/file/d/1lTK6h_L3-okQAaanIuAX9-yK2Wiibwna/preview"
             },
             {
                 id: 3,
-                title: "Maestro Shifu: El Hito de 1M en Kick",
-                category: "streamers",
-                categoryLabel: "Streamers & Creadores",
-                views: "310.5K",
-                likes: "52.1K",
-                duration: "0:58",
-                poster: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+                title: "Tercer Video del Catálogo",
+                categoryLabel: "Tercer Edit",
+                duration: "1080p HD",
+                poster: "https://placehold.co/600x800/141414/e60000?text=Tercer+Edit",
+                driveUrl: "https://drive.google.com/file/d/1iq1AYXpIMdljnsjnknlILFxJbA4AV_AT/preview"
             },
             {
                 id: 4,
-                title: "Último Lanzamiento: Reciente Edit 1080p HD",
-                category: "recientes",
-                categoryLabel: "Lo Más Reciente",
-                views: "89.1K",
-                likes: "15.3K",
-                duration: "0:35",
-                poster: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=800&q=80",
-                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+                title: "Último Lanzamiento (Más Reciente)",
+                categoryLabel: "Más Reciente",
+                duration: "1080p HD",
+                poster: "https://placehold.co/600x800/141414/ffffff?text=Edit+Reciente",
+                driveUrl: "https://drive.google.com/file/d/16eO4HQO2Wz48b8hvLPkB1AxueRnQrdqf/preview"
             }
         ];
 
-        // DOM Elements
         const videoGrid = document.getElementById('video-grid');
-        const filterTabs = document.getElementById('filter-tabs');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        // Modal Elements
         const videoModal = document.getElementById('video-modal');
         const modalCloseBtn = document.getElementById('modal-close-btn');
         const modalTitle = document.getElementById('modal-title');
         const modalCategory = document.getElementById('modal-category');
-        const modalVideoElement = document.getElementById('modal-video-element');
-        const modalVideoSource = document.getElementById('modal-video-source');
-        const modalViews = document.getElementById('modal-views');
-        const modalLikes = document.getElementById('modal-likes');
+        const modalIframe = document.getElementById('modal-iframe');
 
-        // Render Video Cards
-        function renderVideos(filter = 'all') {
+        function renderVideos() {
             videoGrid.innerHTML = '';
-            const filtered = filter === 'all' 
-                ? videoCatalog 
-                : videoCatalog.filter(item => item.category === filter);
-
-            filtered.forEach(video => {
+            videoCatalog.forEach(video => {
                 const card = document.createElement('div');
                 card.className = "group bg-cardBg border border-borderDark hover:border-ufcRed rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between";
                 card.onclick = () => openModal(video);
 
                 card.innerHTML = `
-                    <div class="relative aspect-[9/16] sm:aspect-[4/5] overflow-hidden bg-black">
-                        <!-- Thumbnail Image -->
-                        <img src="${video.poster}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" onerror="this.src='https://placehold.co/600x800/141414/e60000?text=Strexx+TikTok'">
-                        
-                        <!-- Gradient Overlay -->
+                    <div class="relative aspect-[4/5] overflow-hidden bg-black">
+                        <img src="${video.poster}" alt="${video.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-
-                        <!-- Top Category Tag -->
                         <div class="absolute top-3 left-3 bg-darkBg/80 backdrop-blur-md border border-borderDark px-3 py-1 rounded-full text-[10px] font-bold text-ufcGold uppercase tracking-wider">
                             ${video.categoryLabel}
                         </div>
-
-                        <!-- Play Button Overlay -->
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div class="w-14 h-14 bg-ufcRed/90 group-hover:bg-ufcRed text-white rounded-full flex items-center justify-center text-xl transition-all duration-300 transform group-hover:scale-110 glow-red">
                                 <i class="fa-solid fa-play ml-1"></i>
                             </div>
                         </div>
-
-                        <!-- Duration Badge -->
                         <div class="absolute bottom-3 right-3 bg-black/80 px-2 py-0.5 rounded text-[10px] font-semibold text-gray-300">
                             ${video.duration}
                         </div>
                     </div>
-
-                    <!-- Card Body -->
-                    <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
-                        <h3 class="font-heading font-bold text-base text-white group-hover:text-ufcRed transition-colors line-clamp-2">
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <h3 class="font-heading font-bold text-base text-white group-hover:text-ufcRed transition-colors">
                             ${video.title}
                         </h3>
-
-                        <div class="flex items-center justify-between text-xs text-gray-400 pt-2 border-t border-borderDark/60">
-                            <span><i class="fa-solid fa-eye text-ufcRed mr-1"></i> ${video.views}</span>
-                            <span><i class="fa-solid fa-heart text-ufcRed mr-1"></i> ${video.likes}</span>
-                        </div>
                     </div>
                 `;
                 videoGrid.appendChild(card);
             });
         }
 
-        // Filter Tabs Event Listeners
-        filterTabs.addEventListener('click', (e) => {
-            if (e.target.classList.contains('tab-btn')) {
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.classList.remove('bg-ufcRed', 'text-white', 'active');
-                    btn.classList.add('bg-cardBg', 'text-gray-300');
-                });
-
-                e.target.classList.remove('bg-cardBg', 'text-gray-300');
-                e.target.classList.add('bg-ufcRed', 'text-white', 'active');
-
-                const filter = e.target.getAttribute('data-filter');
-                renderVideos(filter);
-            }
-        });
-
-        // Open Modal Function
         function openModal(video) {
             modalTitle.innerText = video.title;
             modalCategory.innerText = video.categoryLabel;
-            modalViews.innerText = video.views;
-            modalLikes.innerText = video.likes;
-            
-            modalVideoSource.src = video.videoUrl;
-            modalVideoElement.load();
-            
+            modalIframe.src = video.driveUrl;
             videoModal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
-        // Close Modal Function
         function closeModal() {
             videoModal.classList.add('hidden');
-            modalVideoElement.pause();
-            modalVideoSource.src = "";
+            modalIframe.src = "";
             document.body.style.overflow = 'auto';
         }
 
@@ -557,48 +449,27 @@
             if (e.target === videoModal) closeModal();
         };
 
-        // Mobile Menu Toggle
-        mobileMenuBtn.onclick = () => {
-            mobileMenu.classList.toggle('hidden');
-        };
-        mobileLinks.forEach(link => {
-            link.onclick = () => mobileMenu.classList.add('hidden');
-        });
+        mobileMenuBtn.onclick = () => mobileMenu.classList.toggle('hidden');
+        mobileLinks.forEach(link => link.onclick = () => mobileMenu.classList.add('hidden'));
 
-        // Form Submit via Direct Mailto & Success Notification
+        // Formulario
         const form = document.getElementById('suggestion-form');
         const formSuccess = document.getElementById('form-success');
 
         form.onsubmit = (e) => {
             e.preventDefault();
-            
-            const name = document.getElementById('form-name').value;
-            const proposal = document.getElementById('form-proposal').value;
-            const message = document.getElementById('form-message').value || 'Sin mensaje adicional';
+            const name = document.getElementById('user-name').value;
+            const proposal = document.getElementById('user-proposal').value;
+            const message = document.getElementById('user-message').value;
 
-            const emailSubject = encodeURIComponent(`Sugerencia de Edit - ${name}`);
-            const emailBody = encodeURIComponent(
-                `Propuesta de Edit para ReprodByStrexx\n` +
-                `-----------------------------------------\n` +
-                `Nombre / Nick: ${name}\n` +
-                `Propuesta: ${proposal}\n\n` +
-                `Detalles / Mensaje:\n${message}`
-            );
+            const mailtoUrl = `mailto:reprodbystrexx@gmail.com?subject=Nueva Sugerencia de Edit (${encodeURIComponent(name)})&body=Nombre: ${encodeURIComponent(name)}%0APropuesta: ${encodeURIComponent(proposal)}%0AMensaje: ${encodeURIComponent(message)}`;
 
-            // Open user's default mail client with formatted email
-            window.location.href = `mailto:reprodbystrexx@gmail.com?subject=${emailSubject}&body=${emailBody}`;
-
-            // Show success alert on webpage
-            form.reset();
+            window.location.href = mailtoUrl;
             formSuccess.classList.remove('hidden');
-            setTimeout(() => {
-                formSuccess.classList.add('hidden');
-            }, 7000);
+            form.reset();
         };
 
-        // Initial Render
-        renderVideos('all');
+        renderVideos();
     </script>
 </body>
 </html>
-```
