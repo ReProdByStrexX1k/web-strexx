@@ -3,12 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0b0b">
+    <meta name="description" content="Galería de edits y montajes de ReProdByStrexX: streamers, MMA y adrenalina en video vertical.">
+    <meta property="og:title" content="ReprodByStrexx | Galería de Edits & Montajes">
+    <meta property="og:description" content="Mis edits destacados y mi colección completa en TikTok.">
+    <meta property="og:type" content="website">
     <title>ReprodByStrexx | Galería Digital de Edits & Montajes</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e60000'/%3E%3Ctext x='32' y='47' font-size='40' font-weight='900' text-anchor='middle' fill='white' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E">
+
+    <!-- Conexiones tempranas a los CDN -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- ============================================================
+         MOTOR DE DESCARGA: corre ANTES de cargar Tailwind, fuentes e
+         iconos, así los videos ya se están bajando mientras la página
+         se dibuja. Se descargan en paralelo, se guardan en memoria
+         (blob) y en Cache Storage para que la próxima visita sea instantánea.
+         ============================================================ -->
+    <script>
+    (function () {
+        // Si reemplazas o cambias un video, cambia esta versión para forzar la descarga nueva.
+        var VERSION = "2026-11-06";
+        var CACHE_NAME = "strexx-videos-" + VERSION;
+
+        var CATALOG = [
+            { id: 1, title: "Togi", label: "Destacado Principal", duration: "HD",
+              file: "reprodbystrexx - 7316205319053446406.mp4" },
+            { id: 2, title: "Ninguna es ella...", label: "Destacado Principal", duration: "HD",
+              file: "Ninguna es ella, pero ella ya no es ella; la que extrañas ya no existe, y la que existe ya no te extraña..mp4" },
+            { id: 3, title: "", label: "Motivación Marpe", duration: "HD",
+              file: "reprodbystrexx - 7433487144175340805.mp4" }
+        ];
+
+        // Ahorro de datos o red 2G: no precargar, bajar solo al tocar.
+        var conn = navigator.connection || {};
+        var LITE = !!(conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ""));
+
+        var store = {};
+        CATALOG.forEach(function (v) {
+            v.url = "./" + encodeURIComponent(v.file) + "?v=" + VERSION;
+            store[v.id] = { status: "idle", loaded: 0, total: 0, blobUrl: null, promise: null };
+        });
+
+        function emit(id) {
+            window.dispatchEvent(new CustomEvent("strexx:video", { detail: { id: id } }));
+        }
+
+        async function fromCache(v) {
+            try {
+                if (!("caches" in window)) return null;
+                var c = await caches.open(CACHE_NAME);
+                var r = await c.match(v.url);
+                if (!r) return null;
+                var b = await r.blob();
+                return b.size > 1000 ? b : null;
+            } catch (e) { return null; }
+        }
+
+        async function toCache(v, blob) {
+            try {
+                if (!("caches" in window)) return;
+                var c = await caches.open(CACHE_NAME);
+                await c.put(v.url, new Response(blob, { headers: { "Content-Type": "video/mp4" } }));
+                var keys = await caches.keys();
+                keys.forEach(function (k) {
+                    if (k.indexOf("strexx-videos-") === 0 && k !== CACHE_NAME) caches.delete(k);
+                });
+            } catch (e) {}
+        }
+
+        async function download(v, priority) {
+            var s = store[v.id];
+            s.status = "loading"; s.loaded = 0; emit(v.id);
+
+            var blob = await fromCache(v);
+            if (!blob) {
+                var res = await fetch(v.url, { priority: priority, cache: "force-cache" });
+                if (!res.ok) throw new Error("HTTP " + res.status);
+                s.total = parseInt(res.headers.get("Content-Length"), 10) || 0;
+
+                if (res.body && res.body.getReader) {
+                    var reader = res.body.getReader();
+                    var chunks = [], loaded = 0;
+                    for (;;) {
+                        var r = await reader.read();
+                        if (r.done) break;
+                        chunks.push(r.value);
+                        loaded += r.value.length;
+                        s.loaded = loaded;
+                        emit(v.id);
+                    }
+                    blob = new Blob(chunks, { type: "video/mp4" });
+                } else {
+                    blob = await res.blob();
+                }
+                toCache(v, blob);
+            }
+
+            s.blobUrl = URL.createObjectURL(blob);
+            s.loaded = s.total = blob.size;
+            s.status = "ready";
+            emit(v.id);
+        }
+
+        function start(v, priority) {
+            var s = store[v.id];
+            if (s.promise) return s.promise;
+            s.promise = download(v, priority || "auto").catch(function () {
+                s.status = "error"; emit(v.id);
+            });
+            return s.promise;
+        }
+
+        window.StrexxVideos = { catalog: CATALOG, store: store, start: start, lite: LITE };
+
+        // Pedir al navegador que no borre los videos guardados.
+        try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+
+        // Arrancar TODAS las descargas en paralelo desde el primer milisegundo.
+        // El primer video va con prioridad alta porque es el que se ve primero.
+        if (!LITE) {
+            CATALOG.forEach(function (v, i) { start(v, i === 0 ? "high" : "auto"); });
+        }
+    })();
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Iconos y fuentes sin bloquear el dibujado de la página -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    </noscript>
 
     <script>
         tailwind.config = {
@@ -31,6 +162,7 @@
         }
     </script>
     <style>
+        html { scroll-padding-top: 5rem; }
         body {
             background-color: #0b0b0b;
             color: #e5e5e5;
@@ -57,6 +189,22 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #262626; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #e60000; }
         video::-webkit-media-controls { display: none !important; }
+
+        /* Efecto de carga mientras el video se descarga */
+        .skeleton {
+            background: linear-gradient(110deg, #141414 30%, #232323 45%, #141414 60%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s linear infinite;
+            transition: opacity .4s;
+        }
+        @keyframes shimmer { to { background-position: -200% 0; } }
+
+        /* Dibuja las secciones de abajo solo cuando se acerca el scroll */
+        .defer-render { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
     </style>
 </head>
 <body class="custom-scrollbar selection:bg-ufcRed selection:text-white">
@@ -84,7 +232,7 @@
                 <span>GALERÍA OFICIAL 2026</span>
             </div>
 
-            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-ufcRed focus:outline-none text-2xl">
+            <button id="mobile-menu-btn" aria-label="Abrir menú" class="md:hidden text-white hover:text-ufcRed focus:outline-none text-2xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
@@ -178,7 +326,7 @@
     </section>
 
     <!-- SOBRE MÍ -->
-    <section id="filosofia" class="py-20 px-4 bg-cardBg/40 border-y border-borderDark relative overflow-hidden">
+    <section id="filosofia" class="defer-render py-20 px-4 bg-cardBg/40 border-y border-borderDark relative overflow-hidden">
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
             <div class="lg:col-span-5 relative flex justify-center">
@@ -240,7 +388,7 @@
     </section>
 
     <!-- BUZÓN DE IDEAS -->
-    <section id="comunidad" class="py-20 px-4 max-w-4xl mx-auto">
+    <section id="comunidad" class="defer-render py-20 px-4 max-w-4xl mx-auto">
         <div class="bg-cardBg border border-borderDark rounded-3xl p-6 sm:p-10 relative overflow-hidden">
             <div class="text-center space-y-3 mb-10">
                 <h2 class="font-heading font-black text-3xl sm:text-4xl uppercase tracking-tight">
@@ -299,7 +447,7 @@
             </div>
 
             <div class="flex items-center space-x-6">
-                <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg">
+                <a href="https://www.tiktok.com/@reprodbystrexx" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="w-10 h-10 bg-cardBg border border-borderDark hover:border-ufcRed text-gray-400 hover:text-ufcRed rounded-xl flex items-center justify-center transition-colors text-lg">
                     <i class="fa-brands fa-tiktok"></i>
                 </a>
             </div>
@@ -314,22 +462,28 @@
                     <h4 id="modal-title" class="font-heading font-bold text-white text-sm sm:text-base truncate">Título del Edit</h4>
                     <p id="modal-category" class="text-[10px] text-ufcGold font-semibold uppercase tracking-wider">Categoría</p>
                 </div>
-                <button id="modal-close-btn" class="w-8 h-8 shrink-0 bg-cardBg hover:bg-ufcRed text-gray-400 hover:text-white rounded-xl flex items-center justify-center transition-colors">
+                <button id="modal-close-btn" aria-label="Cerrar" class="w-8 h-8 shrink-0 bg-cardBg hover:bg-ufcRed text-gray-400 hover:text-white rounded-xl flex items-center justify-center transition-colors">
                     <i class="fa-solid fa-xmark text-base"></i>
                 </button>
             </div>
 
             <div class="relative w-full bg-black flex-1 flex items-center justify-center overflow-hidden aspect-[9/16]">
-                <video id="modal-video" class="w-full h-full object-contain cursor-pointer" playsinline autoplay loop preload="auto" disablepictureinpicture controlslist="nodownload noremoteplayback"></video>
+                <video id="modal-video" class="w-full h-full object-contain cursor-pointer" playsinline loop preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload noremoteplayback"></video>
 
-                <div id="loader" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div id="loader" class="hidden absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none">
                     <div class="w-12 h-12 border-4 border-ufcRed border-t-transparent rounded-full animate-spin"></div>
+                    <span id="loader-text" class="text-xs font-semibold text-white/90"></span>
                 </div>
 
                 <div id="pause-icon" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div class="w-16 h-16 bg-black/60 text-white rounded-full flex items-center justify-center text-2xl">
                         <i class="fa-solid fa-play ml-1"></i>
                     </div>
+                </div>
+
+                <!-- Barra fina de progreso de reproducción -->
+                <div class="absolute bottom-0 left-0 w-full h-1 bg-white/10 pointer-events-none">
+                    <div id="playbar" class="h-full bg-ufcRed" style="width:0%"></div>
                 </div>
             </div>
 
@@ -340,147 +494,267 @@
     </div>
 
     <script>
-        // Videos subidos al mismo repositorio (raíz del proyecto)
-        const videoCatalog = [
-            {
-                id: 1,
-                title: "Togi",
-                categoryLabel: "Destacado Principal",
-                duration: "HD",
-                file: "reprodbystrexx - 7316205319053446406.mp4"
-            },
-            {
-                id: 2,
-                title: "Ninguna es ella...",
-                categoryLabel: "Destacado Principal",
-                duration: "HD",
-                file: "Ninguna es ella, pero ella ya no es ella; la que extrañas ya no existe, y la que existe ya no te extraña..mp4"
-            },
-            {
-                id: 3,
-                title: "",
-                categoryLabel: "Motivación Marpe",
-                duration: "HD",
-                file: "reprodbystrexx - 7433487144175340805.mp4"
-            }
-        ];
+    (function () {
+        var V = window.StrexxVideos;
+        var catalog = V.catalog, store = V.store;
+        var byId = {};
+        catalog.forEach(function (v) { byId[v.id] = v; });
 
-        // Convierte el nombre del archivo en una ruta válida (espacios, acentos, comas, etc.)
-        videoCatalog.forEach(v => { v.videoUrl = "./" + encodeURIComponent(v.file); });
+        var grid = document.getElementById('video-grid');
+        var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        var mobileMenu = document.getElementById('mobile-menu');
+        var mobileLinks = document.querySelectorAll('.mobile-link');
 
-        const videoGrid = document.getElementById('video-grid');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+        var videoModal = document.getElementById('video-modal');
+        var modalCloseBtn = document.getElementById('modal-close-btn');
+        var modalTitle = document.getElementById('modal-title');
+        var modalCategory = document.getElementById('modal-category');
+        var modalVideo = document.getElementById('modal-video');
+        var pauseIcon = document.getElementById('pause-icon');
+        var loader = document.getElementById('loader');
+        var loaderText = document.getElementById('loader-text');
+        var playbar = document.getElementById('playbar');
 
-        const videoModal = document.getElementById('video-modal');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
-        const modalTitle = document.getElementById('modal-title');
-        const modalCategory = document.getElementById('modal-category');
-        const modalVideo = document.getElementById('modal-video');
-        const pauseIcon = document.getElementById('pause-icon');
-        const loader = document.getElementById('loader');
+        var cards = {};
+        var modalOpen = false, currentId = null, openToken = 0;
 
-        // Círculo de carga mientras el video llega
-        modalVideo.addEventListener('loadstart', () => loader.classList.remove('hidden'));
-        modalVideo.addEventListener('waiting', () => loader.classList.remove('hidden'));
-        modalVideo.addEventListener('canplay', () => loader.classList.add('hidden'));
-        modalVideo.addEventListener('playing', () => loader.classList.add('hidden'));
+        function pctOf(s) {
+            return s.total ? Math.min(100, Math.floor(s.loaded / s.total * 100)) : null;
+        }
 
-        function renderVideos() {
-            videoGrid.innerHTML = '';
-            videoCatalog.forEach(video => {
-                const card = document.createElement('div');
+        /* ---------- TARJETAS ---------- */
+        function renderCards() {
+            grid.innerHTML = '';
+            catalog.forEach(function (v) {
+                var card = document.createElement('div');
                 card.className = "group bg-cardBg border border-borderDark hover:border-ufcRed rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between";
-                card.onclick = () => openModal(video);
+                card.innerHTML =
+                    '<div class="relative aspect-[4/5] overflow-hidden bg-black">' +
+                        '<video data-thumb muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 pointer-events-none"></video>' +
+                        '<div data-skeleton class="absolute inset-0 skeleton pointer-events-none"></div>' +
+                        '<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none"></div>' +
+                        '<div class="absolute top-3 left-3 bg-darkBg/80 backdrop-blur-md border border-borderDark px-3 py-1 rounded-full text-[10px] font-bold text-ufcGold uppercase tracking-wider">' + v.label + '</div>' +
+                        '<div class="absolute inset-0 flex items-center justify-center">' +
+                            '<div class="w-14 h-14 bg-ufcRed/90 group-hover:bg-ufcRed text-white rounded-full flex items-center justify-center text-xl transition-all duration-300 transform group-hover:scale-110 glow-red">' +
+                                '<i class="fa-solid fa-play ml-1"></i>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div data-chip class="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/70 px-2 py-0.5 rounded text-[10px] font-semibold text-gray-300">Preparando…</div>' +
+                        '<div class="absolute bottom-3 right-3 bg-black/80 px-2 py-0.5 rounded text-[10px] font-semibold text-gray-300">' + v.duration + '</div>' +
+                        '<div data-barwrap class="absolute bottom-0 left-0 w-full h-1 bg-black/60" style="transition:opacity .6s .3s">' +
+                            '<div data-bar class="h-full bg-ufcRed" style="width:0%;transition:width .2s"></div>' +
+                        '</div>' +
+                    '</div>' +
+                    (v.title ?
+                    '<div class="p-5 flex-1 flex flex-col justify-between">' +
+                        '<h3 class="font-heading font-bold text-base text-white group-hover:text-ufcRed transition-colors">' + v.title + '</h3>' +
+                    '</div>' : '');
 
-                // preload="auto": el video empieza a descargarse al entrar a la página
-                card.innerHTML = `
-                    <div class="relative aspect-[4/5] overflow-hidden bg-black">
-                        <video src="${video.videoUrl}#t=0.5" preload="auto" muted playsinline class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100 pointer-events-none"></video>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                        <div class="absolute top-3 left-3 bg-darkBg/80 backdrop-blur-md border border-borderDark px-3 py-1 rounded-full text-[10px] font-bold text-ufcGold uppercase tracking-wider">
-                            ${video.categoryLabel}
-                        </div>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-14 h-14 bg-ufcRed/90 group-hover:bg-ufcRed text-white rounded-full flex items-center justify-center text-xl transition-all duration-300 transform group-hover:scale-110 glow-red">
-                                <i class="fa-solid fa-play ml-1"></i>
-                            </div>
-                        </div>
-                        <div class="absolute bottom-3 right-3 bg-black/80 px-2 py-0.5 rounded text-[10px] font-semibold text-gray-300">
-                            ${video.duration}
-                        </div>
-                    </div>
-                    ${video.title ? `
-                    <div class="p-5 flex-1 flex flex-col justify-between">
-                        <h3 class="font-heading font-bold text-base text-white group-hover:text-ufcRed transition-colors">
-                            ${video.title}
-                        </h3>
-                    </div>` : ''}
-                `;
-                videoGrid.appendChild(card);
+                card.addEventListener('click', function () { openModal(v); });
+                grid.appendChild(card);
+
+                var c = {
+                    thumb: card.querySelector('[data-thumb]'),
+                    skeleton: card.querySelector('[data-skeleton]'),
+                    chip: card.querySelector('[data-chip]'),
+                    bar: card.querySelector('[data-bar]'),
+                    barWrap: card.querySelector('[data-barwrap]'),
+                    thumbSet: false
+                };
+                c.thumb.addEventListener('loadeddata', function () {
+                    c.thumb.classList.remove('opacity-0');
+                    c.thumb.classList.add('opacity-80');
+                    c.skeleton.style.opacity = '0';
+                });
+                cards[v.id] = c;
             });
         }
 
-        function openModal(video) {
-            modalTitle.innerText = video.title || video.categoryLabel;
-            modalCategory.innerText = video.categoryLabel;
-            pauseIcon.classList.add('hidden');
-            loader.classList.remove('hidden');
-            modalVideo.src = video.videoUrl;
-            videoModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            const p = modalVideo.play();
-            if (p && p.catch) p.catch(() => {});
+        function paint(id) {
+            var s = store[id], c = cards[id];
+            if (!c) return;
+            var pct = pctOf(s);
+
+            if (s.status === 'ready') {
+                c.bar.style.width = '100%';
+                c.barWrap.style.opacity = '0';
+                c.chip.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Listo';
+                if (!c.thumbSet) { c.thumbSet = true; c.thumb.src = s.blobUrl + '#t=0.5'; }
+            } else if (s.status === 'loading') {
+                c.bar.style.width = (pct == null ? 15 : pct) + '%';
+                c.chip.textContent = pct == null ? 'Cargando…' : 'Cargando ' + pct + '%';
+            } else if (s.status === 'error') {
+                c.chip.textContent = 'Toca para reproducir';
+                c.barWrap.style.opacity = '0';
+                if (!c.thumbSet) {
+                    c.thumbSet = true;
+                    c.thumb.src = byId[id].url + '#t=0.5';
+                }
+            } else {
+                // idle (modo ahorro de datos)
+                c.chip.textContent = 'Toca para reproducir';
+                c.barWrap.style.opacity = '0';
+                c.skeleton.style.animation = 'none';
+            }
         }
 
-        function closeModal() {
+        /* ---------- PROGRESO (agrupado por frame para no gastar batería) ---------- */
+        var dirty = {}, raf = 0;
+        window.addEventListener('strexx:video', function (e) {
+            dirty[e.detail.id] = 1;
+            if (raf) return;
+            raf = requestAnimationFrame(function () {
+                raf = 0;
+                var ids = Object.keys(dirty);
+                dirty = {};
+                ids.forEach(function (k) { var id = +k; paint(id); updateModalLoader(id); });
+            });
+        });
+
+        // Reintentar descargas fallidas cuando vuelva el internet
+        window.addEventListener('online', function () {
+            catalog.forEach(function (v) {
+                if (store[v.id].status === 'error') { store[v.id].promise = null; V.start(v, 'auto'); }
+            });
+        });
+
+        /* ---------- MODAL ---------- */
+        function setLoader(show, text) {
+            loader.classList.toggle('hidden', !show);
+            if (text !== undefined) loaderText.textContent = text;
+        }
+
+        function updateModalLoader(id) {
+            if (!modalOpen || id !== currentId) return;
+            var s = store[id];
+            if (s.status === 'loading' && !loader.classList.contains('hidden')) {
+                var pct = pctOf(s);
+                loaderText.textContent = pct == null ? '' : pct + '%';
+            }
+        }
+
+        function tryPlay() {
+            var p = modalVideo.play();
+            if (p && p.catch) p.catch(function () {
+                setLoader(false);
+                pauseIcon.classList.remove('hidden');
+            });
+        }
+
+        async function attach(v, token) {
+            var s = store[v.id];
+            if (s.status === 'idle') V.start(v, 'high');
+            // Espera la descarga que ya viene en curso (no se baja dos veces).
+            if (s.promise) { try { await s.promise; } catch (e) {} }
+            if (token !== openToken || !modalOpen) return;
+            modalVideo.src = s.blobUrl || v.url;   // si falló, reproduce directo desde la red
+            tryPlay();
+        }
+
+        function openModal(v) {
+            modalOpen = true;
+            currentId = v.id;
+            var token = ++openToken;
+
+            modalTitle.textContent = v.title || v.label;
+            modalCategory.textContent = v.label;
+            pauseIcon.classList.add('hidden');
+            playbar.style.width = '0%';
+            modalVideo.dataset.fb = '';
+            videoModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Botón "atrás" del celular cierra el video en vez de salir de la página
+            try { history.pushState({ m: 1 }, ''); } catch (e) {}
+
+            setLoader(store[v.id].status !== 'ready', '');
+            updateModalLoader(v.id);
+            attach(v, token);
+        }
+
+        function closeModal(fromPop) {
+            if (!modalOpen) return;
+            modalOpen = false;
+            openToken++;
             videoModal.classList.add('hidden');
-            loader.classList.add('hidden');
+            setLoader(false);
             modalVideo.pause();
             modalVideo.removeAttribute('src');
             modalVideo.load();
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
+            if (fromPop !== true && history.state && history.state.m) { history.back(); }
         }
 
-        modalCloseBtn.onclick = closeModal;
-        videoModal.onclick = (e) => {
-            if (e.target === videoModal) closeModal();
-        };
+        window.addEventListener('popstate', function () { if (modalOpen) closeModal(true); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden && modalOpen && !modalVideo.paused) {
+                modalVideo.pause();
+                pauseIcon.classList.remove('hidden');
+            }
+        });
+
+        modalCloseBtn.addEventListener('click', function () { closeModal(); });
+        videoModal.addEventListener('click', function (e) { if (e.target === videoModal) closeModal(); });
+
+        // Estado del reproductor
+        modalVideo.addEventListener('waiting', function () { if (modalOpen) setLoader(true, ''); });
+        modalVideo.addEventListener('canplay', function () { setLoader(false); });
+        modalVideo.addEventListener('playing', function () { setLoader(false); pauseIcon.classList.add('hidden'); });
+        modalVideo.addEventListener('timeupdate', function () {
+            if (modalVideo.duration && isFinite(modalVideo.duration)) {
+                playbar.style.width = (modalVideo.currentTime / modalVideo.duration * 100) + '%';
+            }
+        });
+
+        // Si el video en memoria falla, reintenta directo desde la red (una sola vez)
+        modalVideo.addEventListener('error', function () {
+            if (!modalOpen || modalVideo.dataset.fb === '1' || !modalVideo.getAttribute('src')) return;
+            modalVideo.dataset.fb = '1';
+            modalVideo.src = byId[currentId].url;
+            setLoader(true, '');
+            tryPlay();
+        });
 
         // Tocar el video = pausar / reproducir
-        modalVideo.onclick = () => {
+        modalVideo.addEventListener('click', function () {
             if (modalVideo.paused) {
-                modalVideo.play();
+                tryPlay();
                 pauseIcon.classList.add('hidden');
             } else {
                 modalVideo.pause();
                 pauseIcon.classList.remove('hidden');
             }
-        };
+        });
 
-        mobileMenuBtn.onclick = () => mobileMenu.classList.toggle('hidden');
-        mobileLinks.forEach(link => link.onclick = () => mobileMenu.classList.add('hidden'));
+        /* ---------- MENÚ ---------- */
+        mobileMenuBtn.addEventListener('click', function () { mobileMenu.classList.toggle('hidden'); });
+        mobileLinks.forEach(function (link) {
+            link.addEventListener('click', function () { mobileMenu.classList.add('hidden'); });
+        });
 
-        // Formulario
-        const form = document.getElementById('suggestion-form');
-        const formSuccess = document.getElementById('form-success');
+        /* ---------- FORMULARIO ---------- */
+        var form = document.getElementById('suggestion-form');
+        var formSuccess = document.getElementById('form-success');
 
-        form.onsubmit = (e) => {
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
-            const name = document.getElementById('user-name').value;
-            const proposal = document.getElementById('user-proposal').value;
-            const message = document.getElementById('user-message').value;
+            var name = document.getElementById('user-name').value;
+            var proposal = document.getElementById('user-proposal').value;
+            var message = document.getElementById('user-message').value;
 
-            const subject = encodeURIComponent(`Nueva Sugerencia de Edit (${name})`);
-            const body = encodeURIComponent(`Nombre: ${name}\nPropuesta: ${proposal}\nMensaje: ${message}`);
+            var subject = encodeURIComponent('Nueva Sugerencia de Edit (' + name + ')');
+            var body = encodeURIComponent('Nombre: ' + name + '\nPropuesta: ' + proposal + '\nMensaje: ' + message);
 
-            window.location.href = `mailto:reprodbystrexx@gmail.com?subject=${subject}&body=${body}`;
+            window.location.href = 'mailto:reprodbystrexx@gmail.com?subject=' + subject + '&body=' + body;
             formSuccess.classList.remove('hidden');
             form.reset();
-        };
+        });
 
-        renderVideos();
+        /* ---------- INICIO ---------- */
+        renderCards();
+        catalog.forEach(function (v) { paint(v.id); }); // la descarga ya empezó en el <head>
+    })();
     </script>
 </body>
 </html>
