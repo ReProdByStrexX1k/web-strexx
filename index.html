@@ -293,6 +293,9 @@
                 <p class="text-xs text-gray-500 mt-1">
                     Una galería independiente para los verdaderos apasionados. © 2026 ReprodByStrexx.
                 </p>
+                <p class="text-[11px] text-gray-600 mt-1">
+                    <i class="fa-regular fa-calendar mr-1"></i> Actualizado: 6 de noviembre de 2026
+                </p>
             </div>
 
             <div class="flex items-center space-x-6">
@@ -317,7 +320,12 @@
             </div>
 
             <div class="relative w-full bg-black flex-1 flex items-center justify-center overflow-hidden aspect-[9/16]">
-                <video id="modal-video" class="w-full h-full object-contain cursor-pointer" playsinline autoplay loop disablepictureinpicture controlslist="nodownload noremoteplayback"></video>
+                <video id="modal-video" class="w-full h-full object-contain cursor-pointer" playsinline autoplay loop preload="auto" disablepictureinpicture controlslist="nodownload noremoteplayback"></video>
+
+                <div id="loader" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-12 h-12 border-4 border-ufcRed border-t-transparent rounded-full animate-spin"></div>
+                </div>
+
                 <div id="pause-icon" class="hidden absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div class="w-16 h-16 bg-black/60 text-white rounded-full flex items-center justify-center text-2xl">
                         <i class="fa-solid fa-play ml-1"></i>
@@ -371,6 +379,13 @@
         const modalCategory = document.getElementById('modal-category');
         const modalVideo = document.getElementById('modal-video');
         const pauseIcon = document.getElementById('pause-icon');
+        const loader = document.getElementById('loader');
+
+        // Círculo de carga mientras el video llega
+        modalVideo.addEventListener('loadstart', () => loader.classList.remove('hidden'));
+        modalVideo.addEventListener('waiting', () => loader.classList.remove('hidden'));
+        modalVideo.addEventListener('canplay', () => loader.classList.add('hidden'));
+        modalVideo.addEventListener('playing', () => loader.classList.add('hidden'));
 
         function renderVideos() {
             videoGrid.innerHTML = '';
@@ -379,9 +394,10 @@
                 card.className = "group bg-cardBg border border-borderDark hover:border-ufcRed rounded-2xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between";
                 card.onclick = () => openModal(video);
 
+                // preload="auto": el video empieza a descargarse al entrar a la página
                 card.innerHTML = `
                     <div class="relative aspect-[4/5] overflow-hidden bg-black">
-                        <video src="${video.videoUrl}#t=0.5" preload="metadata" muted playsinline class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100 pointer-events-none"></video>
+                        <video src="${video.videoUrl}#t=0.5" preload="auto" muted playsinline class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100 pointer-events-none"></video>
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
                         <div class="absolute top-3 left-3 bg-darkBg/80 backdrop-blur-md border border-borderDark px-3 py-1 rounded-full text-[10px] font-bold text-ufcGold uppercase tracking-wider">
                             ${video.categoryLabel}
@@ -410,6 +426,7 @@
             modalTitle.innerText = video.title || video.categoryLabel;
             modalCategory.innerText = video.categoryLabel;
             pauseIcon.classList.add('hidden');
+            loader.classList.remove('hidden');
             modalVideo.src = video.videoUrl;
             videoModal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -419,6 +436,7 @@
 
         function closeModal() {
             videoModal.classList.add('hidden');
+            loader.classList.add('hidden');
             modalVideo.pause();
             modalVideo.removeAttribute('src');
             modalVideo.load();
